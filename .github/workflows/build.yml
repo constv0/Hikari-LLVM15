@@ -37,8 +37,22 @@ jobs:
          cd build
          cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON ../llvm
          ninja -j12
+
+
+         - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        with:
+          name: ollvm
+          path: C:\build\bin
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        if: ${{ github.event_name == 'release' }}
+        with:
+          files: C:/build/bin
       
-         linux:
+        linux:
          name: Build for Linux
          runs-on: ubuntu-20.04
 
@@ -56,10 +70,24 @@ jobs:
 
            - name: Build toolchain
              run: |
-             sudo apt-get -y install cmake ninja-build libzstd-dev binutils-dev gcc git python3 golang
-             git submodule init 
-             git submodule update
-             mkdir linux-build
-             cd linux-build
-             cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON ../llvm
-             ninja -j14
+              sudo apt-get -y install cmake ninja-build libzstd-dev binutils-dev gcc git python3 golang zip unzip
+              git submodule init 
+              git submodule update
+              mkdir linux-build
+              cd linux-build
+              cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON ../llvm
+              ninja -j14
+
+
+           - name: Upload build artifact
+             uses: actions/upload-artifact@v4
+             if: ${{ github.event_name == 'workflow_dispatch' }}
+         with:
+          name: ollvm
+          path: C:\build\bin
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        if: ${{ github.event_name == 'release' }}
+        with:
+          files: C:/build/bin
