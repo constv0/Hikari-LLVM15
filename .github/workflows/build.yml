@@ -26,7 +26,7 @@ jobs:
         with:
           msystem: UCRT64
           update: true
-          install: make diffutils unzip gzip cmake ninja
+          install: make diffutils unzip gzip cmake ninja git
           pacboy: 7zip:p python:p cmake:p gcc:p ninja:p zstd:p clang:p lld:p
 
       - name: Build toolchain
