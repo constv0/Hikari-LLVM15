@@ -36,7 +36,9 @@ jobs:
          mkdir build
          cd build
          cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE ../llvm
-         ninja -j12
+         ninja -j20
+         zip bin.zip bin
+         
 
 
       - name: Upload build artifact
@@ -44,13 +46,13 @@ jobs:
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
           name: ollvm
-          path: C:\build\bin\
+          path: C:\Hikari-LLVM15\build\*.zip
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
         if: ${{ github.event_name == 'release' }}
         with:
-          files: C:/build/bin/
+          files: C:/Hikari-LLVM15/build/*.zip
 
  linux:
 
@@ -78,18 +80,19 @@ jobs:
               mkdir linux-build
               cd linux-build
               cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE ../llvm
-              ninja -j14
+              ninja -j20
+              zip bin.zip bin
 
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         if: ${{ github.event_name == 'workflow_dispatch' }}
         with:
-              name: ollvm
-              path: C:\build\bin\
+          name: ollvm-linux
+          path: build/*.zip
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
         if: ${{ github.event_name == 'release' }}
         with:
-                files: C:/build/bin/
+          files: build/*.zip
