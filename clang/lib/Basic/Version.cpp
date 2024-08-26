@@ -22,47 +22,19 @@
 namespace clang {
 
 std::string getClangRepositoryPath() {
-#if defined(CLANG_REPOSITORY_STRING)
-  return CLANG_REPOSITORY_STRING;
-#else
-#ifdef CLANG_REPOSITORY
-  return CLANG_REPOSITORY;
-#else
-  return "";
-#endif
-#endif
+  return "安笙";
 }
 
 std::string getLLVMRepositoryPath() {
-#ifdef LLVM_REPOSITORY
-  return LLVM_REPOSITORY;
-#else
-  return "";
-#endif
+  return "安笙";
 }
 
 std::string getClangRevision() {
-#ifdef CLANG_REVISION
-  return CLANG_REVISION;
-#else
-  return "";
-#endif
+  return "安笙";
 }
 
 std::string getLLVMRevision() {
-#ifdef LLVM_REVISION
-  return LLVM_REVISION;
-#else
-  return "";
-#endif
-}
-
-std::string getClangVendor() {
-#ifdef CLANG_VENDOR
-  return CLANG_VENDOR;
-#else
-  return "";
-#endif
+  return "安笙";
 }
 
 std::string getClangFullRepositoryVersion() {
@@ -100,7 +72,10 @@ std::string getClangFullVersion() {
 std::string getClangToolFullVersion(StringRef ToolName) {
   std::string buf;
   llvm::raw_string_ostream OS(buf);
-  OS << getClangVendor() << ToolName << " version " CLANG_VERSION_STRING;
+#ifdef CLANG_VENDOR
+  OS << CLANG_VENDOR;
+#endif
+  OS << ToolName << " version " CLANG_VERSION_STRING;
 
   std::string repo = getClangFullRepositoryVersion();
   if (!repo.empty()) {
@@ -115,7 +90,10 @@ std::string getClangFullCPPVersion() {
   // the one we report on the command line.
   std::string buf;
   llvm::raw_string_ostream OS(buf);
-  OS << getClangVendor() << "Clang " CLANG_VERSION_STRING;
+#ifdef CLANG_VENDOR
+  OS << CLANG_VENDOR;
+#endif
+  OS << "Clang " CLANG_VERSION_STRING;
 
   std::string repo = getClangFullRepositoryVersion();
   if (!repo.empty()) {
