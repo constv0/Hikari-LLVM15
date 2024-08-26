@@ -21,9 +21,11 @@ jobs:
         run: |
         
          sudo apt-get update
-         sudo apt-get install -y cmake ninja-build python3-dev libxml2-dev libedit-dev golang gcc
+         sudo apt-get install -y cmake ninja-build python3 libtinfo5-dev zlib1g-dev libxml2-dev libedit-dev golang gcc gnupg git
        
       - name: Build toolchain
         run: |
-          cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE
-          ninja
+         mkdir build
+         cd build
+         cmake -G "Ninja"  -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE ../llvm
+         ninja -j12
