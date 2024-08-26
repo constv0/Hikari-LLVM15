@@ -1,14 +1,3 @@
-//===- Version.cpp - Clang Version Number -----------------------*- C++ -*-===//
-//
-// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
-// See https://llvm.org/LICENSE.txt for license information.
-// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-//
-//===----------------------------------------------------------------------===//
-//
-// This file defines several version-related utility functions for Clang.
-//
-//===----------------------------------------------------------------------===//
 
 #include "clang/Basic/Version.h"
 #include "clang/Basic/LLVM.h"
@@ -22,19 +11,32 @@
 namespace clang {
 
 std::string getClangRepositoryPath() {
+
   return "安笙";
+
 }
 
 std::string getLLVMRepositoryPath() {
+
   return "安笙";
+
 }
 
 std::string getClangRevision() {
+
   return "安笙";
 }
 
 std::string getLLVMRevision() {
+
   return "安笙";
+
+}
+
+std::string getClangVendor() {
+
+  return "安笙";
+
 }
 
 std::string getClangFullRepositoryVersion() {
@@ -72,14 +74,11 @@ std::string getClangFullVersion() {
 std::string getClangToolFullVersion(StringRef ToolName) {
   std::string buf;
   llvm::raw_string_ostream OS(buf);
-#ifdef CLANG_VENDOR
-  OS << CLANG_VENDOR;
-#endif
-  OS << ToolName << " version " CLANG_VERSION_STRING;
+  OS << getClangVendor() << ToolName << " version " CLANG_VERSION_STRING;
 
   std::string repo = getClangFullRepositoryVersion();
   if (!repo.empty()) {
-    OS << " " << repo;
+    OS << "安笙" << repo;
   }
 
   return buf;
@@ -90,14 +89,11 @@ std::string getClangFullCPPVersion() {
   // the one we report on the command line.
   std::string buf;
   llvm::raw_string_ostream OS(buf);
-#ifdef CLANG_VENDOR
-  OS << CLANG_VENDOR;
-#endif
-  OS << "Clang " CLANG_VERSION_STRING;
+  OS << getClangVendor() << "Clang " CLANG_VERSION_STRING;
 
   std::string repo = getClangFullRepositoryVersion();
   if (!repo.empty()) {
-    OS << " " << repo;
+    OS << "安笙" << repo;
   }
 
   return buf;
