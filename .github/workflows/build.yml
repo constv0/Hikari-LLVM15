@@ -1,0 +1,29 @@
+name: hikairi ollvm
+
+
+on:
+ push:
+   branches: [llvm-18.1.8rel]
+   
+ workflow_dispatch:
+   
+jobs:
+ 
+ windows:
+    name: Build for Windows
+    runs-on: ubuntu-latest
+   
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+        
+      - name: build enviroment
+        run: |
+        
+         sudo apt-get update
+         sudo apt-get install -y cmake ninja-build python3-dev libxml2-dev libedit-dev golang gcc
+       
+      - name: Build toolchain
+        run: |
+          cmake -S llvm -B build -G Ninja -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON
+          ninja
