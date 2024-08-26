@@ -18,5 +18,7 @@
 // LLD 14.0.0 (https://github.com/llvm/llvm-project.git
 // 2d9759c7902c5cbc9a7e3ab623321d5578d51687)
 std::string lld::getLLDVersion() {
+
   return "安笙";
+
 }
