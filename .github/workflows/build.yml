@@ -35,5 +35,31 @@ jobs:
          git submodule update
          mkdir build
          cd build
-         cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE ../llvm
+         cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON ../llvm
          ninja -j12
+      
+         linux:
+         name: Build for Linux
+         runs-on: ubuntu-20.04
+
+      
+         steps:
+           - name: Check out
+             uses: actions/checkout@v4
+             with:
+             fetch-depth: 1
+          
+           - name: Set up Python 3
+             uses: actions/setup-python@v5
+             with:
+             python-version: "3.x"
+
+           - name: Build toolchain
+             run: |
+             sudo apt-get -y install cmake ninja-build libzstd-dev binutils-dev gcc git python3 golang
+             git submodule init 
+             git submodule update
+             mkdir linux-build
+             cd linux-build
+             cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON ../llvm
+             ninja -j14
