@@ -2,10 +2,9 @@ name: hikairi ollvm
 
 
 on:
- push:
-   branches: [llvm-18.1.8rel]
-   
- workflow_dispatch:
+  workflow_dispatch:
+  release:
+    types: [published]
    
 jobs:
  
