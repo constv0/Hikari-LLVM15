@@ -25,7 +25,7 @@ jobs:
         with:
          msystem: UCRT64
          update: true
-         install: make diffutils unzip gzip cmake ninja git zip
+         install: make diffutils unzip gzip cmake ninja git zip gcc zstd clang
          pacboy: 7zip:p python:p cmake:p gcc:p ninja:p zstd:p clang:p lld:p
 
       - name: Build toolchain
@@ -34,7 +34,7 @@ jobs:
          git submodule update
          mkdir build
          cd build
-         cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DBUILD_SHARED_LIBS=OFF  ../llvm
+         cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DCMAKE_EXE_LINKER_FLAGS="-static"  ../llvm
          ninja -j20
          
 
@@ -72,12 +72,12 @@ jobs:
 
       - name: Build toolchain
         run: |
-              sudo apt-get -y install cmake ninja-build libzstd-dev binutils-dev gcc git python3 golang zip unzip
+              sudo apt-get -y install cmake ninja-build libzstd-dev binutils-dev gcc git python3 golang zip unzip make zstd
               git submodule init 
               git submodule update
               mkdir linux-build
               cd linux-build
-              cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DBUILD_SHARED_LIBS=OFF ../llvm
+              cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DCMAKE_EXE_LINKER_FLAGS="-static" ../llvm
               ninja -j16
 
 
