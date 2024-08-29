@@ -34,7 +34,7 @@ jobs:
          git submodule update
          mkdir build
          cd build
-         cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON ../llvm
+         cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DBUILD_SHARED_LIBS=OFF  ../llvm
          ninja -j20
          
 
@@ -77,7 +77,7 @@ jobs:
               git submodule update
               mkdir linux-build
               cd linux-build
-              cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DLLVM_BUILD_STATIC=ON ../llvm
+              cmake -G "Ninja" -DLLVM_ENABLE_PROJECTS="clang;lld" -DCMAKE_BUILD_TYPE=Release -DLLVM_INCLUDE_TESTS=OFF -DLLVM_ENABLE_NEW_PASS_MANAGER=TRUE -DBUILD_SHARED_LIBS=OFF ../llvm
               ninja -j16
 
 
